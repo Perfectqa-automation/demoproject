@@ -1,0 +1,32 @@
+
+{
+  "config": {
+    "browser": "chrome",
+    "headless": false
+  },
+  "logIn": {
+    "url": "https://www.saucedemo.com/",
+    "username": "//input[@id='user-name']",
+    "password": "//input[@id='password']",
+    "loginButton": "//input[@id='login-button']"
+  },
+  "homePage": {
+    "product": "//div[@data-test='inventory-item-name']"
+  },
+  "productPage": {
+    "addToCartButton": "//button[@id='add-to-cart']",
+    "shoppingCart": "//a[@data-test='shopping-cart-link']"
+  },
+  "addToCart": {
+    "checkoutButton": "//button[@id='checkout']"
+  },
+  "informationPage": {
+    "firstName": "//input[@id='first-name']",
+    "lastName": "//input[@id='last-name']",
+    "zipCode": "//input[@id='postal-code']",
+    "continueButton": "//input[@id='continue']"
+  },
+  "overview": {
+    "finishButton": "//button[@id='finish']"
+  }
+}
