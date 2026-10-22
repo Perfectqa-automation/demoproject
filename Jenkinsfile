@@ -3,6 +3,7 @@ pipeline {
     agent any
 
     environment {
+        DOCKER = 'C:\\Users\\Shashank\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe'
         BASE_URL = 'https://www.saucedemo.com/'
     }
 
@@ -13,19 +14,13 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Build Docker Image') {
             steps {
-                bat 'call npm ci'
+                bat '"%DOCKER%" build -t swaglabs-playwright:1.0 .'
             }
         }
 
-        stage('Install Playwright Browser') {
-            steps {
-                bat 'call npx playwright install chromium'
-            }
-        }
-
-        stage('Run Playwright Tests') {
+        stage('Run Playwright Tests in Docker') {
             steps {
                 withCredentials([
                     usernamePassword(
@@ -34,7 +29,7 @@ pipeline {
                         passwordVariable: 'SAUCE_PASSWORD'
                     )
                 ]) {
-                    bat 'call npx playwright test'
+                    bat '"%DOCKER%" run --rm -e BASE_URL="%BASE_URL%" -e SAUCE_USERNAME="%SAUCE_USERNAME%" -e SAUCE_PASSWORD="%SAUCE_PASSWORD%" swaglabs-playwright:1.0'
                 }
             }
         }
